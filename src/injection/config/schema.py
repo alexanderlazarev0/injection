@@ -4,9 +4,7 @@
 from typing import Final
 from pathlib import Path
 from pydantic import BaseModel, SecretStr
-from pydantic_core import PydanticUndefined
 from pydantic_settings import BaseSettings, PydanticBaseSettingsSource, SettingsConfigDict, YamlConfigSettingsSource
-import yaml
 
 _CONFIG_LOADER_YAML_PATH: Final[Path] = Path("config_settings.yaml")
 

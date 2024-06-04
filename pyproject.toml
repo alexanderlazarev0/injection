@@ -1,0 +1,23 @@
+[build-system]
+requires = [
+    "poetry-core"
+]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "injection"
+version = "0.0.1"
+description = "Demo for python dependency injection with fastapi."
+readme = "README.md"
+authors = [
+    "Alexander Lazarev <alexandderlazarev0@gmail.com>"
+]
+packages = [
+    {include = "injection", from="src"}
+]
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+fastapi = "^0.111.0"
+dependency-injector = "^4.41.0"
+pydantic = "^2.7.3"
+pydantic-settings = "^2.3.0"

@@ -6,5 +6,8 @@ app = FastAPI()
 
 app.include_router(app_router)
 
-if __name__ == "__main__":
+def main():
     uvicorn.run("injection.main:app", host="localhost", port=8008, reload=True)
+
+if __name__ == "__main__":
+    main()

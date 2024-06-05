@@ -3,7 +3,6 @@
 
 from typing import Final
 from pathlib import Path
-from pydantic import BaseModel, SecretStr
 from pydantic_settings import BaseSettings, PydanticBaseSettingsSource, SettingsConfigDict, YamlConfigSettingsSource
 
 _CONFIG_LOADER_YAML_PATH: Final[Path] = Path("config_settings.yaml")
@@ -38,8 +37,6 @@ class ConfigLoader(BaseSettings):
     )
     data_path: Path = Path(".data")
     config_yaml_filename: str = "config.yaml"
-    config_uvicorn_log_filename: str = "log_conf.yaml"
-
     def config_yaml_path(self) -> Path:
         """
         Path to general configuration file.
@@ -48,33 +45,10 @@ class ConfigLoader(BaseSettings):
         """
         return self.data_path / self.config_yaml_filename
 
-    def config_uvicorn_log_path(self) -> Path:
-        """
-        Path to uvicorn logging configuration file.
-        Returns: path.
-
-        """
-        return self.data_path / self.config_uvicorn_log_filename
-    
 # Load configuration file settings.
 _CONFIG_SETTINGS: Final = ConfigLoader()
 
 
-class ConfigPostgresSql(BaseModel):
-    """Configuration for PostgreSQL database."""
-
-    host: str
-    port: int
-    database: str
-    user: SecretStr
-    password: SecretStr
-
-class ConfigRedis(BaseModel):
-    """Configuration for Redis database."""
-
-    host: str
-    port: int
-    db: int
 
 class Config(Settings):
     """Configuration for the backend application."""
@@ -85,8 +59,6 @@ class Config(Settings):
         case_sensitive=False,
         yaml_file=_CONFIG_SETTINGS.config_yaml_path(),
     )
-    postgres: ConfigPostgresSql
-    redis: ConfigRedis
     
     
     

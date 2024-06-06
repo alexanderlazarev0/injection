@@ -1,33 +1,8 @@
 from injection.injector import inject
 from injection.provider import Provider, SingletonProvider
 
+def _func_with_defaults(a: int, b: int = 1) -> int:
+    return a + b
 
-def test_demo():
-    assert 1 == 1
-
-
-
-def test_injection():
-    
-    
-    provider: Provider[int] = SingletonProvider(_DummyInjectable, 1)
-    
-    inject(_function_to_wrap)()
-    
-    
-    
-
-
-class _DummyInjectable:
-    
-    def __init__(self) -> None:
-        pass
-
-def _function_to_wrap(to_inject: _DummyInjectable) -> None:
-    pass
-
-
-class _DummyInjectableClass:
-    
-    def __init__(self, to_inject: _DummyInjectable) -> None:
-        self.injected = to_inject
+def test_inject_decorator_injects_injected_class():
+    inject(_func_with_defaults)(1)

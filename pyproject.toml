@@ -24,6 +24,8 @@ pydantic-settings = ">=2.3.0"
 pyyaml = ">=6.0.1"
 ruff = ">=0.4.7"
 pytest = "^8.2.2"
+fast-depends = ">=2.4.4"
+jupyter = ">=1.0.0"
 
 [tool.pytest]
 testpaths = ["tests"]

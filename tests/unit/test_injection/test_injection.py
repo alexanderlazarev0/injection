@@ -10,7 +10,7 @@ def test_demo():
 def test_injection():
     
     
-    provider: Provider[int] = SingletonProvider(_DummyInjectable, 1)
+    provider: Provider[_DummyInjectable] = SingletonProvider(_DummyInjectable, 1)
     
     inject(_function_to_wrap)()
     

@@ -1,33 +1,25 @@
 name: injection
 
 services:
-  redis:
-    image: redis:7.2.1
-    container_name: ${COMPOSE_PROJECT_NAME}-redis
-    restart: always
+  web:
+    build:
+      context: .
+      dockerfile: nginx.Dockerfile
     ports:
-      - 6379:6379
-    volumes:
-      - redis_volume:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "-p", "6379", "ping"]
-      start_period: 10s
-      retries: 3
-      timeout: 30s
-      interval: 30s
-
-  postgres:
-    image: postgres
-    container_name: ${COMPOSE_PROJECT_NAME}-postgresql
+      - "8000:80"
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: db
-    ports:
-      - 5432:5432
+      - REWRITE_FROM=/api
+      - REWRITE_TO=""
+      - BACKEND_HOST=api
+      - BACKEND_PORT=8080
+
+  api:
+    image: node:latest
     volumes:
-      - postgresql_volume:/var/lib/postgresql/data
-      
-volumes:
-  redis_volume:
-  postgresql_volume:
+      - ./api:/app
+    command: ["npx", "http-server"]
+    working_dir: /srv
+    ports:
+      - "8080:8080"
+
+  

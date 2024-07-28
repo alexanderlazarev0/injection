@@ -21,8 +21,8 @@ def test_inject_with_single_injection(_create_container: Container) -> None:
         return to_inject
 
     assert _injected_func() == 42, "Dependency should be injected correctly."
-    assert _injected_func(41) == 41, "Dependency should be override correctly by arg."
-    assert _injected_func(to_inject=41) == 41, "Dependency should be override correctly by kwarg."
+    assert _injected_func(41) == 41, "Dependency should be overriden correctly by arg."
+    assert _injected_func(to_inject=41) == 41, "Dependency should be overriden correctly by kwarg."
 
 
 def test_inject_with_override(_create_container: Container) -> None:
@@ -53,10 +53,10 @@ def test_inject_with_multiple_injections(_create_container: Container) -> None:
         return to_inject + to_inject_2
 
     assert _injected_func() == 85, "Dependencies should be injected correctly."
-    assert _injected_func(1) == 44, "Dependency should be override correctly by arg."
-    assert _injected_func(to_inject=1) == 44, "Dependency should be override correctly by kwarg."
+    assert _injected_func(1) == 44, "Dependency should be overriden correctly by arg."
+    assert _injected_func(to_inject=1) == 44, "Dependency should be overriden correctly by kwarg."
     assert _injected_func(1, 1) == 2, "Dependency should be override correctly by args."
-    assert _injected_func(1, to_inject_2=1) == 2, "Dependency should be override correctly by args and kwargs."
+    assert _injected_func(1, to_inject_2=1) == 2, "Dependency should be overriden correctly by args and kwargs."
 
 
 def test_inject_with_multiple_injections_and_override(_create_container: Container) -> None:

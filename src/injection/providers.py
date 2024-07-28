@@ -2,7 +2,9 @@
 
 from abc import ABC, abstractmethod
 import contextlib
-from typing import Callable, Generator
+from typing import Callable, Generator, ParamSpec
+
+P = ParamSpec("P")
 
 
 class Provider[T](ABC):
@@ -19,7 +21,7 @@ class Provider[T](ABC):
         """
 
     @contextlib.contextmanager
-    def override(self, func: Callable[..., T]) -> Generator[None, None, None]:
+    def override(self, func: Callable[P, T]) -> Generator[None, None, None]:
         """Temporarily override the provider's function.
 
         Args:
@@ -42,7 +44,7 @@ class ResourceProvider[T](Provider[T]):
 
 
 class SingletonProvider[T](Provider[T]):
-    def __init__(self, func: Callable[..., T]) -> None:
+    def __init__(self, func: Callable[P, T]) -> None:
         super().__init__(func)
         self._value = None
 
@@ -52,7 +54,7 @@ class SingletonProvider[T](Provider[T]):
         return self._value
 
     @contextlib.contextmanager
-    def override(self, func: Callable[..., T]) -> Generator[None, None, None]:
+    def override(self, func: Callable[P, T]) -> Generator[None, None, None]:
         old_func = self._func
         self._func = func
         old_value = self._value

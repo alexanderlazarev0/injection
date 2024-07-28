@@ -31,6 +31,7 @@ def test_singleton_provider() -> None:
 
     class _Stub(object):
         """Dummy class with a counter to track the number of initializations."""
+
         init_count = 0
 
         def __init__(self):
@@ -38,6 +39,7 @@ def test_singleton_provider() -> None:
 
     class _OverrideStub(object):
         """Dummy class with a counter to track the number of initializations."""
+
         init_count = 0
 
         def __init__(self):

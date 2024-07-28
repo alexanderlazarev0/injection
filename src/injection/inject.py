@@ -1,17 +1,8 @@
-
-
-
-
-
-
 from functools import wraps
 from inspect import signature
-from pydoc import resolve
-from re import T
 from typing import Callable, TypeVar
 
 from injection.providers import Provider
-
 
 
 T = TypeVar("T")
@@ -19,9 +10,10 @@ T = TypeVar("T")
 
 class Injected:
     """Marker class for injected dependencies."""
+
     def __init__(self, provider: Provider) -> None:
         self._provider = provider
-        
+
     @property
     def provider(self) -> Provider:
         return self._provider
@@ -36,13 +28,13 @@ def inject(func: Callable[..., T]) -> Callable[..., T]:
     Returns:
         Callable[..., T]: Decorated function.
     """
+
     @wraps(func)
-    def wrapper(*args, **kwargs) -> T: # type: ignore
+    def wrapper(*args, **kwargs) -> T:  # type: ignore
         resolved_kwargs = _resolve_args_and_kwargs_to_signature(func, args, kwargs)
         return func(**resolved_kwargs)
-    
-    return wrapper
 
+    return wrapper
 
 
 def _resolve_args_and_kwargs_to_signature(func: Callable[..., T], args, kwargs) -> dict[str, T]:
@@ -67,4 +59,3 @@ def _resolve_args_and_kwargs_to_signature(func: Callable[..., T], args, kwargs) 
             if isinstance(param.default, Injected):
                 resolved_args[param_name] = param.default.provider.resolve()
     return resolved_args
-
